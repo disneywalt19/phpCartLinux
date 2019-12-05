@@ -7,6 +7,7 @@ require_once('../include/config/config.php');
 require_once('../include/traffic/traffic.php');
 
 // Check if admin logged
+$DASHBOARD_URL = 'http://localhost/PHP_CART/control_panel/';
 if ($admin->adminLogged == true) {
 	header('location: ' . $GLOBALS['URL'] . $DASHBOARD_URL);
 	exit();
@@ -32,7 +33,7 @@ exit();
 // Log in
 if(isset($_POST['username']) && isset($_POST['password'])) {
 	$LOGIN_URL = 'http://localhost/PHP_CART/control_panel/login.php';
-	$DASHBOARD_URL = 'http://localhost/PHP_CART/control_panel/';
+	
 	// Check URL
 	if($_SERVER['HTTP_REFERER'] == $LOGIN_URL) {
 		// Get values
