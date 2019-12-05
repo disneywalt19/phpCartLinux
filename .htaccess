@@ -1,0 +1,53 @@
+Options +FollowSymLinks -indexes
+
+
+ErrorDocument 404 /404.php
+
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(ttf|ttc|otf|eot|woff|font.css|css)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
+</IfModule>
+
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteBase /
+
+## If the request is for a valid directory
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+## If the request is for a valid file
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+## If the request is for a valid link
+RewriteCond %{REQUEST_FILENAME} -l
+## don't do anything
+RewriteRule ^ - [L]
+
+
+# Product
+RewriteRule ^product/([A-Za-z0-9-]+) product.php?id=$1 [L]
+
+
+# Brand
+RewriteRule ^brand/([A-Za-z0-9-]+) brand.php?id=$1 [L]
+
+
+# Category
+RewriteRule ^category/([A-Za-z0-9-]+) category.php?id=$1 [L]
+
+
+# Checkout
+RewriteRule ^checkout checkout.php [L]
+
+
+# Page
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/?$ index.php?pageURL=$1&pageNumber=$2&pageItems=$3 [L,QSA]
+RewriteRule ^([^/]+)/([^/]+)/?$ index.php?pageURL=$1&pageNumber=$2 [L,QSA]
+RewriteRule ^([^/]+)/?$ index.php?pageURL=$1 [L,QSA]
+
+
+
+
+
+

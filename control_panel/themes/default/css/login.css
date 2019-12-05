@@ -1,0 +1,35 @@
+/* Admin log in page style */
+
+
+body {
+	background: #F1F1F1;
+}
+
+h1 {
+	text-align: center;
+}
+
+.align-center {
+text-align: center;
+}
+
+.login-box {
+	max-width: 400px;
+	max-top: 40px;
+	margin-bottom: 40px;
+}
+	.panel {
+		margin-top: 20px;
+		margin-bottom: 20px;
+		border: 1px solid #DDD;
+		background: #FFF;
+	}
+		.panel-body {
+			padding: 20px;
+		}
+.lost-password-box {
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+}
