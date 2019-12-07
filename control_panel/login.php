@@ -51,8 +51,8 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
 	// Check log in status
 	if($loginCheck['status'] == true) {
 		
-		echo 'success';
-		exit();
+		/*echo 'success';
+		exit();*/
 		
 		// Update admin log
 		adminUpdateLog($loginCheck['ID'], $_SERVER['REMOTE_ADDR']);
