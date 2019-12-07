@@ -17,11 +17,14 @@ if(_VALID !='Yes')
 	<?php echo $message; ?>
 	<div class="panel">
 		<div class="panel-body">
-			<form action="<?php echo $GLOBALS['URL'] ?>/PHP_CART/control_panel/login.php" method="POST">
+			<form action="<?php echo $GLOBALS['URL'] ?>/PHP_CART/control_panel/securityCode.php" method="POST">
 				`<h1> <?php echo $lang['website.admin.panel']; ?></h1>
 				<br>
-				
-				<button type="submit" class="btn btn-info"><i class="fas fa-angle-double-right"></i>&nbsp;<?php echo $lang['website.forms.button.login'] ?></button>
+				<div class="form-group">
+					<label><?php echo $lang['website.forms.label.securitycode']; ?></label>
+					<input type="text" name="securityCode" class="form-control" autocomplete="off" maxlenght="6">
+				</div>
+				<button type="submit" class="btn btn-info"><i class="fas fa-angle-double-right"></i>&nbsp;<?php echo $lang['website.forms.button.done']; ?></button>
 			</form>
 		</div>
 	</div>

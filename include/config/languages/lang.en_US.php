@@ -21,8 +21,10 @@ $lang['website.forms.label.username'] = 'Username';
 $lang['website.forms.label.password'] = 'Password';
 $lang['website.forms.label.remember.me'] = 'Remember me';
 $lang['website.forms.label.password.forgot'] = 'I forgot my password';
+$lang['website.forms.label.securitycode'] = 'Security code';
 # Buttons
 $lang['website.forms.button.login'] = 'Log in';
+$lang['website.forms.button.done'] = 'Done';
 # Log in
 $lang['website.login.title'] = 'Log in';
 $lang['website.login.message.empty'] = 'Please enter your log in information.';

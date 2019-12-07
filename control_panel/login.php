@@ -17,7 +17,7 @@ if ($admin->adminLogged == true) {
 define('LOGIN_URL', $GLOBALS['URL'] . '/control_panel/login');
 define('DASHBOARD_URL', $GLOBALS['URL'] . '/control_panel/');
 define('SECURITY_URL', $GLOBALS['URL'] . '/control_panel/securityCode');
-
+$SECURITY_URL = 'http://localhost/PHP_CART/control_panel/securityCode.php';
 // Variables
 $message = '';
 $postUsername= '';
@@ -50,11 +50,37 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
 	
 	// Check log in status
 	if($loginCheck['status'] == true) {
-		
+		// Check if validation code
+
 		/*echo 'success';
 		exit();*/
 		
-		// Update admin log
+		
+		
+		if($loginCheck['doubleStep'] == true) {
+			// Generate security code
+			$securityCode = rand(100000, 999999);
+
+			// Update database with security code
+			if (adminUpdateSecurityCode($loginCheck['ID'], $securityCode)) {
+				// Set security code cookie
+				setcookie('code', true, strtotime('+15 minutes'), '/', '', false, true);
+
+
+				setcookie('remember', $postCheckbox, strtotime('+15 minutes'), '/', '', false, true);
+				// Send email to admin
+
+				// Redirect to double step
+				header('location: ' . $SECURITY_URL);
+				exit();
+
+			} else {
+				// Error
+				$message = '<div class="alert alert-warning align-center" role="alert">' . $lang['website.login.message.crash'] . '</div>';
+			}
+	
+		} else {
+			// Update admin log
 		adminUpdateLog($loginCheck['ID'], $_SERVER['REMOTE_ADDR']);
 		
 		if($postCheckbox = 'yes') {
@@ -74,11 +100,13 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
 			$_SESSION['sessionAdminUser'] = $loginCheck['username'];
 			$_SESSION['sessionAdminPass'] = $loginCheck['password'];
 		}
-		
 		// Redirect to dashboard
 		header('location: ' . $DASHBOARD_URL);
 		exit();
-	
+		
+		}
+
+		
 	} else {
 		// Log in failed
 		$messageIndex = $loginCheck['message'];
@@ -112,7 +140,7 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
 <link href="<?php echo $GLOBALS['URL'] ?>/PHP_CART/control_panel/favicon.ico" rel="shortcut icon">
 </head>
 <body>
-<?php include_once('themes/' . $GLOBALS['ADMIN_THEME_PATH'] . '/login.php'); ?>
+<?php include_once('themes/' . $GLOBALS['ADMIN_THEME_PATH'] . '/securityCode.php'); ?>
 	
 	
 </body>

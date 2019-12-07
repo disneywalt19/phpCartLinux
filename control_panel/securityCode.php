@@ -12,8 +12,20 @@ if ($admin->adminLogged == true) {
 	exit();
 }
 
+
+
 // Constants
 define('LOGIN_URL', $GLOBALS['URL'] . '/control_panel/login');
+
+// Variables
+$message = '';
+
+// Check if security code cookie was made
+if (!isset($_COOKIE['code']) == true || !isset($_COOKIE['remember'])) {
+	// Invalid cookie
+	header('location: ' . LOGIN_URL);
+	exit();
+}
 
 ?>
 <!DOCTYPE html>

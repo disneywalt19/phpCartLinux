@@ -15,8 +15,8 @@ function adminLogin($username, $password) {
 		'email'		 => '',
 		'username'   => '',
 		'password'   => '',
-		'doubleStep' => false,
-		'status' 	 => false,
+		'doubleStep' => true,
+		'status' 	 => true,
 		'message' 	 => ''
 		);
 	if($username != '' && $username !=' ' && $password != '' && $password != ' ') {
@@ -73,12 +73,35 @@ function adminLogin($username, $password) {
 function adminUpdateLog($adminID) {
 	if(strlen($adminID) < 21) {
 		// Filter value
-	$adminID = preg_replace('#[^0-9]#', '', $_SERVER['REMOTE_ADDR']);
+	$adminID = preg_replace('#[^0-9]#', '', $adminID);
 	$adminIP = strip_tags($IP);
 	$adminIP = $GLOBALS['mysqli']->real_escape_string($IP);
 	$sqlUpdate = "UPDATE sc_admins SET adminLoginIP='adminIP', adminLoginDate=now() WHERE adminID='$adminID' AND adminStatus='1' LIMIT 1";
 	$queryUpdate = $GLOBALS['mysqli']->query($sqlUpdate);
 	}
+}
+
+// Update admins security code
+function adminUpdateSecurityCode($adminID, $code) {
+	if ($adminID != '' && $code != '') {
+		if(strlen($adminID) < 21 && strlen($code) == 6) {
+			// Filter values
+			$adminID = preg_replace('#[^0-9]#', '', $adminID);
+			$code = preg_replace('#[^0-9]#', '', $code);
+			$sqlUpdate = "UPDATE sc_admins SET adminSecurityCode='$code' WHERE adminID='$adminID' AND  adminSecurityEnabled='1' AND adminStatus='1' LIMIT 1";
+			$queryUpdate = $GLOBALS['mysqli']->query($sqlUpdate);
+
+			if ($queryUpdate === FALSE) {
+				// Query error
+				return false;
+			} else {
+				// Success
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 ?>
